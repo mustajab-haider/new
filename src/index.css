@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts are loaded via index.html ── */
+
+/* ── Base resets ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #1a0a10;
+  font-family: 'Cormorant Garamond', serif;
+  color: #fff8f5;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #e8405a; border-radius: 2px; }
+
+/* ── Scroll-reveal utility ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── 3D flip card (needs preserve-3d which Tailwind can't do cleanly) ── */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 4px;
+}
+.card-back-face {
+  transform: rotateY(180deg);
+}
+
+/* ── Btn fill animation ── */
+.fancy-btn {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease, border-color 0.4s ease;
+}
+.fancy-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #e8405a;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+.fancy-btn:hover::before {
+  transform: translateX(0);
+}
+.fancy-btn:hover {
+  color: #ffffff;
+}
+.fancy-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Gallery grid special spans ── */
+.gallery-grid .photo-card:nth-child(1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.gallery-grid .photo-card:nth-child(5) {
+  grid-column: span 2;
+}
+@media (max-width: 768px) {
+  .gallery-grid .photo-card:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+  .gallery-grid .photo-card:nth-child(5) { grid-column: span 1; }
+}
+
+/* ── Photo card hover effects ── */
+.photo-card .photo-overlay { opacity: 0; transition: opacity 0.4s ease; }
+.photo-card:hover .photo-overlay { opacity: 1; }
+.photo-card .photo-caption { transform: translateY(10px); transition: transform 0.4s ease; }
+.photo-card:hover .photo-caption { transform: none; }
+.photo-card .photo-date { transform: translateY(10px); transition: transform 0.4s ease 0.05s; }
+.photo-card:hover .photo-date { transform: none; }
+.photo-card .photo-corner { opacity: 0; transition: opacity 0.4s ease; }
+.photo-card:hover .photo-corner { opacity: 1; }
+.photo-card canvas { transition: transform 0.6s ease; }
+.photo-card:hover canvas { transform: scale(1.05); }
+
+/* ── Lightbox canvas scale in ── */
+.lightbox-inner canvas {
+  transform: scale(0.9);
+  transition: transform 0.4s ease;
+}
+.lightbox-active .lightbox-inner canvas {
+  transform: scale(1);
+}
+
+/* ── Strip item hover ── */
+.strip-item:hover {
+  transform: translateY(-8px) rotate(0deg) scale(1.05) !important;
+  box-shadow: 0 20px 50px rgba(232, 64, 90, 0.3);
+}
+
+/* ── Hero animation delays ── */
+.hero-ornament { animation-delay: 3s; }
+.hero-title    { animation-delay: 3.2s; }
+.hero-sub      { animation-delay: 3.5s; }
+.hero-love     { animation-delay: 3.7s; }
+.hero-btn      { animation-delay: 4s; }
